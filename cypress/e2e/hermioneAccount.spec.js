@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 describe('Bank app - Hermione Granger', () => {
   const depositAmount = faker.number.int({ min: 500, max: 1000 });
   const withdrawAmount = faker.number.int({ min: 50, max: 500 });
-  const balance = depositAmount - withdrawAmount; // Now correctly calculates as numbers
+  const balance = depositAmount - withdrawAmount;
   const user = 'Hermione Granger';
   const accountNumber = '1001';
   const alternateAccountNumber = '1002';
@@ -34,7 +34,7 @@ describe('Bank app - Hermione Granger', () => {
 
     // Deposit money
     cy.get('[ng-click="deposit()"]').click();
-    cy.get('[placeholder="amount"]').type(`${depositAmount}`); // Convert to string for input
+    cy.get('[placeholder="amount"]').type(`${depositAmount}`);
     cy.contains('[type="submit"]', 'Deposit').click();
 
     // Assert deposit success and updated balance
@@ -46,7 +46,7 @@ describe('Bank app - Hermione Granger', () => {
 
     // Withdraw money
     cy.get('[ng-click="withdrawl()"]').click();
-    cy.get('[placeholder="amount"]').type(`${withdrawAmount}`); // Convert to string for input
+    cy.get('[placeholder="amount"]').type(`${withdrawAmount}`);
     cy.contains('[type="submit"]', 'Withdraw').click();
 
     // Assert withdrawal success and updated balance
@@ -58,7 +58,7 @@ describe('Bank app - Hermione Granger', () => {
 
     // Check transactions
     cy.get('[ng-click="transactions()"]').click();
-    cy.get('table tbody tr').should('have.length.at.least', 2); // At least deposit and withdrawal
+    cy.get('table tbody tr').should('have.length.at.least', 2);
     cy.get('table tbody tr').eq(0).within(() => {
       cy.get('td').eq(1).should('contain', `${depositAmount}`);
       cy.get('td').eq(2).should('contain', 'Credit');
@@ -72,11 +72,11 @@ describe('Bank app - Hermione Granger', () => {
     cy.get('[ng-click="back()"]').click();
 
     // Change account number
-    cy.get('[name="accountrobot').select(alternateAccountNumber);
+    cy.get('[name="accountSelect"]').select(alternateAccountNumber);
 
     // Check transactions for alternate account (should be empty)
     cy.get('[ng-click="transactions()"]').click();
-    cy.get('table tbody tr').should('have.length', 0); // No transactions
+    cy.get('table tbody tr').should('have.length', 0);
 
     // Logout
     cy.get('[ng-click="byebye()"]').click();
